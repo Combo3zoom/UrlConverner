@@ -1,0 +1,50 @@
+<h2>Short URLs Table View</h2>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Source URL</th>
+    <th>Short URL</th>
+    <th>Created At</th>
+    <th>Owner User</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let shortUrl of shortUrls">
+    <td>{{ shortUrl.urlId }}</td>
+    <td>{{ shortUrl.sourceUrl }}</td>
+    <td>{{ shortUrl.shortUrl }}</td>
+    <td>{{ shortUrl.createdAt }}</td>
+    <td>{{ shortUrl.ownerUser.name }}</td>
+    <td>
+
+      <button (click)="redirectToOriginalUrl(shortUrl.shortUrl)">Redirect</button>
+      <button (click)="redirectToDetails(shortUrl.urlId)">
+        View Details
+      </button>
+
+      <button *ngIf="userRole === 'Admin' || (userRole === 'User' && shortUrl.ownerUser.name === userName)"
+              (click)="deleteUrl(shortUrl.urlId)">
+        Delete
+      </button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<form #addUrlForm="ngForm" (ngSubmit)="addNewUrl(addUrlForm)">
+  <input type="text" name="url" [(ngModel)]="newUrl" #urlInput="ngModel" required pattern="https?://.+">
+  <div *ngIf="urlInput.invalid && (urlInput.dirty || urlInput.touched)" class="error">
+    <div *ngIf="urlInput.errors?.['required']">
+      URL is required.
+    </div>
+    <div *ngIf="urlInput.errors?.['pattern']">
+      Invalid URL format.
+    </div>
+  </div>
+  <button type="submit" [disabled]="addUrlForm.invalid">Add new URL</button>
+</form>
+

@@ -1,0 +1,5 @@
+<h2>Description</h2>
+<form (ngSubmit)="updateDescription()">
+  <textarea class="description_table" [(ngModel)]="description" name="description" [readonly]="userRole !== 'Admin'" rows="10" cols="50"></textarea>
+  <button class="button_upgrade" type="submit" *ngIf="userRole === 'Admin'">Update Description</button>
+</form>

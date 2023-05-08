@@ -1,0 +1,11 @@
+.description_table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.button_upgrade {
+  align-self: center;
+}
+
